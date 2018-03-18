@@ -1,0 +1,40 @@
+group 'com'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.2.0'
+
+    repositories {
+
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'org.nield:kotlin-statistics:1.0.0'
+
+
+    compile group: 'com.jakewharton.fliptables', name: 'fliptables', version: '1.0.2'
+    compile group: 'net.sf.jung', name: 'jung-graph-impl', version: '2.1.1'
+    compile group: 'net.sf.jung', name: 'jung-api', version: '2.1.1'
+    compile group: 'net.sf.jung', name: 'jung-algorithms', version: '2.1.1'
+    compile group: 'net.sf.jung', name: 'jung-io', version: '2.1.1'
+    compile group: 'net.sf.jung', name: 'jung-visualization', version: '2.1.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
