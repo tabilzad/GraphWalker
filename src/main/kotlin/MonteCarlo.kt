@@ -18,8 +18,6 @@ val graphPath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\
 val g = loadGraphML(graphPath)
 
 fun main(args: Array<String>) {
-    //showMemory()
-   // val leftAverage = Collections.synchronizedList(ArrayList<Int>())
     val time = measureTimeMillis {
         val gList = Collections.synchronizedList(ArrayList<Int>())
         val threads = ArrayList<Thread>(threads_count)
@@ -28,11 +26,6 @@ fun main(args: Array<String>) {
             threads.add(Thread(Runnable {
                 val g = MGraph(Iterations, probability, g)
                 g.run_sim()
-
-                /*.also {
-            leftAverage.add((it / 1000).times(Iterations).toInt())
-            println("${leftAverage.average()} seconds left")
-        }*/
                 gList.addAll(g.list)
             }))
             threads[i - 1].start()
@@ -46,26 +39,21 @@ fun main(args: Array<String>) {
 }
 
 fun display(list: List<Int>) {
-    StringBuilder().run {
+    println(StringBuilder().run {
         append("Calculating averages...")
         append(System.lineSeparator())
         val mean = list.average()
         append("Walk Length: " + mean)
         append(System.lineSeparator())
         val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
-        //println("Error: " + error * 100 + "%")
+        println("Error: " + error * 100 + "%")
         append("(+/-) " + error * 1.96)
         append(System.lineSeparator())
         append("Samples:" + list.size)
         append(System.lineSeparator())
         append("-------------------------------")
-        toString().also { summary ->
-            print(summary)
-            File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
-                it.write(summary)
-            }
-        }
-    }
+        toString()
+    })
 }
 
 private fun loadGraphML(s: String): Hypergraph<Number, Number> {
