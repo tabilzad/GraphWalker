@@ -9,51 +9,75 @@ import java.lang.StringBuilder
 import java.util.*
 import kotlin.system.measureTimeMillis
 
-
 val threads_count = 8
 val probability = 0.0
-val Iterations = 64000 / threads_count
-val graphPath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Shapes\\Flower\\flower_96.graphml"
-//val graphPath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Shapes\\Dual\\triangularHexagonGrid_91.graphml"
-val g = loadGraphML(graphPath)
+val Iterations = 640000 / threads_count
+val inputGraph = HexagonalLattice.FLOWER_24
+val graphs = loadGraphs(
+        "flower_24",
+        "flower_54",
+        "flower_96",
+        "flower_150",
+        "HexagonGrid_19",
+        "HexagonGrid_37",
+        "HexagonGrid_61",
+        "HexagonGrid_91",
+        "HexagonGrid_127",
+        "HexagonGrid_169",
+        "HexagonGrid_217"
+)
 
 fun main(args: Array<String>) {
+    //showMemory()
+    val gList = Collections.synchronizedList(ArrayList<Int>())
     val time = measureTimeMillis {
-        val gList = Collections.synchronizedList(ArrayList<Int>())
         val threads = ArrayList<Thread>(threads_count)
         (1..threads_count).forEach { i ->
-
             threads.add(Thread(Runnable {
-                val g = MGraph(Iterations, probability, g)
+                val g = MGraph(Iterations, probability, graphs[inputGraph]!! to inputGraph)
                 g.run_sim()
                 gList.addAll(g.list)
+
             }))
             threads[i - 1].start()
         }
-
         (1..threads_count).forEach { i -> threads[i - 1].join() }
-        display(list = gList)
     }
-    println("Time: " + time / 1000.0
-            + " seconds")
+    display(list = gList, time = time)
 }
 
-fun display(list: List<Int>) {
-    println(StringBuilder().run {
+fun loadGraphs(vararg names: String): Map<Lattice, Hypergraph<Number, Number>> {
+    return names.map<String, Pair<Lattice, Hypergraph<Number, Number>>> {
+        val basePath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Shapes"
+        when (it.contains("flower")) {
+            true -> HexagonalLattice.valueOf(it.toUpperCase()) to loadGraphML("$basePath\\Flower\\$it.graphml")
+            else -> TriangularLattice.valueOf(it) to loadGraphML("$basePath\\Dual\\$it.graphml")
+        }
+    }.toMap()
+}
+
+fun display(list: List<Int>, time: Long) {
+    StringBuilder().run {
         append("Calculating averages...")
         append(System.lineSeparator())
         val mean = list.average()
         append("Walk Length: " + mean)
         append(System.lineSeparator())
         val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
-        println("Error: " + error * 100 + "%")
+        append("Error: " + error * 100 + "%")
         append("(+/-) " + error * 1.96)
         append(System.lineSeparator())
         append("Samples:" + list.size)
         append(System.lineSeparator())
+        append("Time: " + time / 1000.0 + " seconds")
         append("-------------------------------")
-        toString()
-    })
+        toString().also { summary ->
+            print(summary)
+            File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
+                it.write(summary)
+            }
+        }
+    }
 }
 
 private fun loadGraphML(s: String): Hypergraph<Number, Number> {

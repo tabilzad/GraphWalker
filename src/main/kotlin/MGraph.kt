@@ -1,24 +1,35 @@
 import edu.uci.ics.jung.graph.Hypergraph
 import java.util.concurrent.*
-import kotlin.system.measureTimeMillis
 
-class MGraph(val Iterations: Int, val pb: Double, val graph: Hypergraph<Number, Number>) {
+class MGraph(val Iterations: Int, val pb: Double, val graphInfo: Pair<Hypergraph<Number, Number>, Lattice>) {
+
+    val graph = graphInfo.first
     var list = mutableListOf<Int>()
     var steps = 0
     private var current: Number = 0
     fun run_sim() {
-        (1..Iterations).forEach {
-            do {
-                current = graph.vertices.toList()[randomize(graph.vertexCount)]
-            } while (current == 41)
-            while (current != 41) {
-                //stepWithVirtualSitesForTriangle()
-                stepWithVirtualSitesForHex()
-                steps++
+        graphInfo.second.let { lattice ->
+            (1..Iterations).forEach {
+                do {
+                    current = graph.vertices.toList()[randomize(graph.vertexCount)]
+                } while (current == lattice.centerPoint)
+                while (current != lattice.centerPoint) {
+                    algorithm(lattice)()
+                    steps++
+                }
+                list.add(steps)
+                steps = 0
             }
-            list.add(steps)
-            steps = 0
         }
+    }
+
+    private fun algorithm(lattice: Lattice): () -> Unit {
+        return when (lattice) {
+            is TriangularLattice -> ::stepWithVirtualSitesForTriangle
+            is HexagonalLattice -> ::stepWithVirtualSitesForHex
+            else -> throw IllegalArgumentException("cant find this kind of Lattice")
+        }
+
     }
 
     private fun stepWithVirtualSitesForHex() {//works
@@ -27,7 +38,7 @@ class MGraph(val Iterations: Int, val pb: Double, val graph: Hypergraph<Number, 
         current = when {
             neighbors.size == 3 -> neighbors.toList()[randomize(neighbors.size)]
             neighbors.size == 2 -> neighbors.toList().plus(current)[randomize(neighbors.size)]
-            else -> throw Exception("dfssdf")
+            else -> throw Exception("WRONG GRAPH/METHOD")
         }
     }
 
