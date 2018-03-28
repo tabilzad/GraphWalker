@@ -2,7 +2,6 @@ import edu.uci.ics.jung.graph.Hypergraph
 import java.util.concurrent.*
 
 class MGraph(val Iterations: Int, val pb: Double, val graphInfo: Pair<Hypergraph<Number, Number>, Lattice>) {
-
     val graph = graphInfo.first
     var list = mutableListOf<Int>()
     var steps = 0
