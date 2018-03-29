@@ -57,27 +57,23 @@ fun loadGraphs(vararg names: String): Map<Lattice, Hypergraph<Number, Number>> {
 }
 
 fun display(list: List<Int>, time: Long) {
-    StringBuilder().run {
-        append("Calculating averages...")
-        append(System.lineSeparator())
-        val mean = list.average()
-        append("Walk Length: " + mean)
-        append(System.lineSeparator())
-        val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
-        append("Error: " + error * 100 + "%")
-        append("(+/-) " + error * 1.96)
-        append(System.lineSeparator())
-        append("Samples:" + list.size)
-        append(System.lineSeparator())
-        append("Time: " + time / 1000.0 + " seconds")
-        append("-------------------------------")
-        toString().also { summary ->
-            print(summary)
-            File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
-                it.write(summary)
+    val mean = list.average()
+    val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
+    listOf(("Calculating averages..."),
+            ("Lattice: ${inputGraph.name}"),
+            ("Iterations: $Iterations"),
+            ("Walk Length: $mean"),
+            ("Error: ${error * 100}%"),
+            ("(+/-) ${error * 1.96}"),
+            ("Samples:${list.size}"),
+            ("Time: ${time / 1000.0} seconds"),
+            ("-------------------------------")).joinToString { System.lineSeparator() }
+            .also { summary ->
+                print(summary)
+                File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
+                    it.write(summary)
+                }
             }
-        }
-    }
 }
 
 private fun loadGraphML(s: String): Hypergraph<Number, Number> {
