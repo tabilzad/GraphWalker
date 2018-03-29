@@ -67,7 +67,7 @@ fun display(list: List<Int>, time: Long) {
             ("(+/-) ${error * 1.96}"),
             ("Samples:${list.size}"),
             ("Time: ${time / 1000.0} seconds"),
-            ("-------------------------------")).joinToString { System.lineSeparator() }
+            ("-------------------------------")).joinToString(System.lineSeparator())
             .also { summary ->
                 print(summary)
                 File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
