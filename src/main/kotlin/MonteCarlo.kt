@@ -5,19 +5,19 @@ import org.nield.kotlinstatistics.standardDeviation
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
-import java.lang.StringBuilder
 import java.util.*
 import kotlin.system.measureTimeMillis
 
 val threads_count = 8
 val probability = 0.0
-val Iterations = 640000 / threads_count
-val inputGraph = HexagonalLattice.FLOWER_24
+val Iterations = 64000000 / threads_count
+val inputGraph = TriangularLattice.HexagonGrid_217
 val graphs = loadGraphs(
         "flower_24",
         "flower_54",
         "flower_96",
         "flower_150",
+        "flower_216",
         "HexagonGrid_19",
         "HexagonGrid_37",
         "HexagonGrid_61",
@@ -46,6 +46,7 @@ fun main(args: Array<String>) {
     display(list = gList, time = time)
 }
 
+
 fun loadGraphs(vararg names: String): Map<Lattice, Hypergraph<Number, Number>> {
     return names.map<String, Pair<Lattice, Hypergraph<Number, Number>>> {
         val basePath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Shapes"
@@ -61,11 +62,10 @@ fun display(list: List<Int>, time: Long) {
     val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
     listOf(("Calculating averages..."),
             ("Lattice: ${inputGraph.name}"),
-            ("Iterations: $Iterations"),
+            ("Samples: ${list.size}"),
             ("Walk Length: $mean"),
             ("Error: ${error * 100}%"),
             ("(+/-) ${error * 1.96}"),
-            ("Samples:${list.size}"),
             ("Time: ${time / 1000.0} seconds"),
             ("-------------------------------")).joinToString(System.lineSeparator())
             .also { summary ->
