@@ -1,12 +1,21 @@
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph
-import edu.uci.ics.jung.graph.Hypergraph
+import edu.uci.ics.jung.algorithms.layout.*
+import edu.uci.ics.jung.graph.Graph
 import edu.uci.ics.jung.io.graphml.GraphMLReader2
 import org.nield.kotlinstatistics.standardDeviation
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.*
+import edu.uci.ics.jung.visualization.VisualizationImageServer
+import edu.uci.ics.jung.visualization.decorators.EdgeShape
+import java.awt.*
+import java.awt.geom.Ellipse2D
+import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
+import java.awt.geom.Point2D
+import javax.swing.JFrame
 import kotlin.system.measureTimeMillis
+
 
 val threads_count = 8
 val probability = 0.0
@@ -24,7 +33,8 @@ val graphs = loadGraphs(
         "HexagonGrid_91",
         "HexagonGrid_127",
         "HexagonGrid_169",
-        "HexagonGrid_217"
+        "HexagonGrid_217",
+        "Square_3"
 )
 
 fun main(args: Array<String>) {
@@ -46,13 +56,27 @@ fun main(args: Array<String>) {
     display(list = gList, time = time)
 }
 
+fun showJFrame(component: VisualizationImageServer<Number, Number>) {
+    JFrame("Simple Graph View").let { f ->
+        f.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+        f.contentPane.add(component)
+        f.pack()
+        f.isVisible = true
+    }
+}
 
-fun loadGraphs(vararg names: String): Map<Lattice, Hypergraph<Number, Number>> {
-    return names.map<String, Pair<Lattice, Hypergraph<Number, Number>>> {
+fun saveImage(image: BufferedImage, index: Int) {
+    ImageIO.write((image), "jpg", File("images/$index.jpg"))
+    println("image: $index was written to disk")
+}
+
+fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
+    return names.map<String, Pair<Lattice, Graph<Number, Number>>> {
         val basePath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Shapes"
-        when (it.contains("flower")) {
-            true -> HexagonalLattice.valueOf(it.toUpperCase()) to loadGraphML("$basePath\\Flower\\$it.graphml")
-            else -> TriangularLattice.valueOf(it) to loadGraphML("$basePath\\Dual\\$it.graphml")
+        when {
+            it.contains("flower") -> HexagonalLattice.valueOf(it.toUpperCase()) to loadGraphML("$basePath\\Flower\\$it.graphml")
+            it.contains("Grid") -> TriangularLattice.valueOf(it) to loadGraphML("$basePath\\Dual\\$it.graphml")
+            else -> SquarePlanarLattice.valueOf(it) to loadGraphML("$basePath\\Square\\$it.graphml")
         }
     }.toMap()
 }
@@ -76,11 +100,9 @@ fun display(list: List<Int>, time: Long) {
             }
 }
 
-private fun loadGraphML(s: String): Hypergraph<Number, Number> {
+private fun loadGraphML(s: String): Graph<Number, Number> {
     val stream = FileInputStream(File(s))
-    val reader0 = InputStreamReader(stream)
-    val g = DirectedSparseMultigraph<String, String>()
-    val reader = GraphMLReader2(reader0, graphFactory(), vertexFactory(), edgeFactory(), hyperEdgeFactory())
+    val reader = GraphMLReader2(InputStreamReader(stream), graphFactory(), vertexFactory(), edgeFactory(), hyperEdgeFactory())
     return reader.readGraph()
 }
 
@@ -89,22 +111,6 @@ private fun showMemory() {
     println("Total memory (bytes): " + Runtime.getRuntime().totalMemory())
     println("Free memory (bytes): " + Runtime.getRuntime().freeMemory())
     println("Max memory (bytes): " + Runtime.getRuntime().maxMemory())
-}
-
-fun findDeviation(nums: List<Int>, mean: Double): Double {
-    var squareSum = 0.0
-    nums.indices.forEach { i -> squareSum += Math.pow(nums[i] - mean, 2.0) }
-    return Math.sqrt(squareSum / (nums.size - 1))
-}
-
-fun mean2(list: List<Int>): Double {
-    var avg = 0.0
-    var t = 1
-    for (x in list) {
-        avg += (x - avg) / t
-        ++t
-    }
-    return avg
 }
 
 
