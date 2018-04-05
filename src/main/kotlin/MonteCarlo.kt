@@ -1,26 +1,22 @@
-import edu.uci.ics.jung.algorithms.layout.*
 import edu.uci.ics.jung.graph.Graph
 import edu.uci.ics.jung.io.graphml.GraphMLReader2
+import edu.uci.ics.jung.visualization.VisualizationImageServer
 import org.nield.kotlinstatistics.standardDeviation
+import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
+import java.time.LocalTime
 import java.util.*
-import edu.uci.ics.jung.visualization.VisualizationImageServer
-import edu.uci.ics.jung.visualization.decorators.EdgeShape
-import java.awt.*
-import java.awt.geom.Ellipse2D
-import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
-import java.awt.geom.Point2D
 import javax.swing.JFrame
 import kotlin.system.measureTimeMillis
 
 
 val threads_count = 8
 val probability = 0.0
-val Iterations = 64000000 / threads_count
-val inputGraph = TriangularLattice.HexagonGrid_217
+val Iterations = 128_000_000 / threads_count
+val inputGraph = TriangularLattice.HexagonGrid_91
 val graphs = loadGraphs(
         "flower_24",
         "flower_54",
@@ -39,13 +35,14 @@ val graphs = loadGraphs(
 
 fun main(args: Array<String>) {
     //showMemory()
+    println("Started at: ${LocalTime.now()}")
     val gList = Collections.synchronizedList(ArrayList<Int>())
     val time = measureTimeMillis {
         val threads = ArrayList<Thread>(threads_count)
         (1..threads_count).forEach { i ->
             threads.add(Thread(Runnable {
                 val g = MGraph(Iterations, probability, graphs[inputGraph]!! to inputGraph)
-                g.run_sim()
+                g.run_simTwoWalker()
                 gList.addAll(g.list)
 
             }))
