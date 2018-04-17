@@ -1,3 +1,5 @@
+package domain
+
 /**
  * Created by FERMAT on 3/26/2018.
  */

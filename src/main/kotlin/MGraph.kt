@@ -1,13 +1,15 @@
+import domain.HexagonalLattice
+import domain.Lattice
+import domain.TriangularLattice
 import edu.uci.ics.jung.graph.Graph
-import edu.uci.ics.jung.graph.Hypergraph
 import java.util.concurrent.*
 
 class MGraph(val Iterations: Int, val pb: Double, val graphInfo: Pair<Graph<Number, Number>, Lattice>) {
     val graph = graphInfo.first
     var list = mutableListOf<Int>()
     var steps = 0
-    private var walker1: Number = 0
-    private var walker2: Number = 0
+    var walker1: Number = 0
+    var walker2: Number = 0
 
     fun run_sim() {
         graphInfo.second.let { lattice ->
@@ -62,7 +64,7 @@ class MGraph(val Iterations: Int, val pb: Double, val graphInfo: Pair<Graph<Numb
 
     private fun stepWithVirtualSitesForHex(w: Number): Number {//works
         val neighbors = graph.getNeighbors(w).toMutableList()
-        neighbors.remove(w)
+        //neighbors.remove(w)
         return when {
             neighbors.size == 3 -> neighbors.toList()[randomize(neighbors.size)]
             neighbors.size == 2 -> neighbors.toList().plus(w)[randomize(neighbors.size)]
@@ -72,7 +74,7 @@ class MGraph(val Iterations: Int, val pb: Double, val graphInfo: Pair<Graph<Numb
 
     private fun stepWithVirtualSitesForTriangle(w: Number): Number {
         val neighbors = graph.getNeighbors(w).toMutableList()
-        neighbors.remove(w)
+        //neighbors.remove(w)
         return when {
             neighbors.size == 6 -> neighbors.toList()[randomize(neighbors.size)]
             neighbors.size == 3 -> neighbors.toList().plus(listOf(w, w, w))[randomize(neighbors.size + 3)]

@@ -1,6 +1,13 @@
+import UI.MonteCarloView
+import UI.MyApp
+import domain.HexagonalLattice
+import domain.Lattice
+import domain.SquarePlanarLattice
+import domain.TriangularLattice
 import edu.uci.ics.jung.graph.Graph
 import edu.uci.ics.jung.io.graphml.GraphMLReader2
 import edu.uci.ics.jung.visualization.VisualizationImageServer
+import javafx.application.Application
 import org.nield.kotlinstatistics.standardDeviation
 import java.awt.image.BufferedImage
 import java.io.File
@@ -16,7 +23,7 @@ import kotlin.system.measureTimeMillis
 val threads_count = 8
 val probability = 0.0
 val Iterations = 128_000_000 / threads_count
-val inputGraph = TriangularLattice.HexagonGrid_91
+val inputGraph = HexagonalLattice.FLOWER_24
 val graphs = loadGraphs(
         "flower_24",
         "flower_54",
@@ -30,41 +37,14 @@ val graphs = loadGraphs(
         "HexagonGrid_127",
         "HexagonGrid_169",
         "HexagonGrid_217",
-        "Square_3"
+        "Square_3",
+        "Square_5"
 )
 
 fun main(args: Array<String>) {
     //showMemory()
-    println("Started at: ${LocalTime.now()}")
-    val gList = Collections.synchronizedList(ArrayList<Int>())
-    val time = measureTimeMillis {
-        val threads = ArrayList<Thread>(threads_count)
-        (1..threads_count).forEach { i ->
-            threads.add(Thread(Runnable {
-                val g = MGraph(Iterations, probability, graphs[inputGraph]!! to inputGraph)
-                g.run_simTwoWalker()
-                gList.addAll(g.list)
+    Application.launch(MyApp::class.java, *args)
 
-            }))
-            threads[i - 1].start()
-        }
-        (1..threads_count).forEach { i -> threads[i - 1].join() }
-    }
-    display(list = gList, time = time)
-}
-
-fun showJFrame(component: VisualizationImageServer<Number, Number>) {
-    JFrame("Simple Graph View").let { f ->
-        f.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        f.contentPane.add(component)
-        f.pack()
-        f.isVisible = true
-    }
-}
-
-fun saveImage(image: BufferedImage, index: Int) {
-    ImageIO.write((image), "jpg", File("images/$index.jpg"))
-    println("image: $index was written to disk")
 }
 
 fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
@@ -78,25 +58,6 @@ fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
     }.toMap()
 }
 
-fun display(list: List<Int>, time: Long) {
-    val mean = list.average()
-    val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
-    listOf(("Calculating averages..."),
-            ("Lattice: ${inputGraph.name}"),
-            ("Samples: ${list.size}"),
-            ("Walk Length: $mean"),
-            ("Error: ${error * 100}%"),
-            ("(+/-) ${error * 1.96}"),
-            ("Time: ${time / 1000.0} seconds"),
-            ("-------------------------------")).joinToString(System.lineSeparator())
-            .also { summary ->
-                print(summary)
-                File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
-                    it.write(summary)
-                }
-            }
-}
-
 private fun loadGraphML(s: String): Graph<Number, Number> {
     val stream = FileInputStream(File(s))
     val reader = GraphMLReader2(InputStreamReader(stream), graphFactory(), vertexFactory(), edgeFactory(), hyperEdgeFactory())
@@ -104,10 +65,4 @@ private fun loadGraphML(s: String): Graph<Number, Number> {
 }
 
 
-private fun showMemory() {
-    println("Total memory (bytes): " + Runtime.getRuntime().totalMemory())
-    println("Free memory (bytes): " + Runtime.getRuntime().freeMemory())
-    println("Max memory (bytes): " + Runtime.getRuntime().maxMemory())
-}
-
-
+//Both variants of the representation are completely different!
