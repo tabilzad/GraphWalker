@@ -1,9 +1,10 @@
 package UI
 
 import javafx.scene.layout.BorderPane
-import Simulation
+import services.Simulation
 import domain.*
 import javafx.scene.paint.Color
+import services.MarkovChains
 import tornadofx.*
 
 
@@ -34,12 +35,26 @@ class RightView : View() {
         with(root) {
             top = choicebox<Lattice> {
                 items.addAll(TriangularLattice.values())
-                items.addAll(HexagonalLattice.values())
+                items.addAll(HoneycombLattice.values())
                 items.addAll(SquarePlanarLattice.values())
                 selectionModel.selectedItemProperty().addListener(
                         ChangeListener<Lattice> { observable, oldValue, newValue ->
                             s = newValue
                         })
+            }
+            left = hbox {
+                button("Simulate").apply {
+                    textFill = Color.RED
+                    action {
+                        Simulation().start(s)
+                    }
+                }
+                button("Render Markov").apply {
+                    textFill = Color.GREEN
+                    action {
+                        MarkovChains(s).calculateCombinations()
+                    }
+                }
             }
         }
     }
@@ -50,15 +65,6 @@ class BottomView : View() {
     override val root = BorderPane()
 
     init {
-        with(root) {
-            left = button("Play").apply {
-                textFill = Color.RED
-                action {
-                    Simulation().start(s)
-                }
-            }
-        }
-
     }
 }
 

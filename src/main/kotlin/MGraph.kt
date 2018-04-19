@@ -1,4 +1,4 @@
-import domain.HexagonalLattice
+import domain.HoneycombLattice
 import domain.Lattice
 import domain.TriangularLattice
 import edu.uci.ics.jung.graph.Graph
@@ -56,7 +56,7 @@ class MGraph(val Iterations: Int, val pb: Double, val graphInfo: Pair<Graph<Numb
     private fun walk(lattice: Lattice): (Number) -> Number {
         return when (lattice) {
             is TriangularLattice -> ::stepWithVirtualSitesForTriangle
-            is HexagonalLattice -> ::stepWithVirtualSitesForHex
+            is HoneycombLattice -> ::stepWithVirtualSitesForHex
             else -> throw IllegalArgumentException("cant find this kind of Lattice")
         }
 
