@@ -1,10 +1,7 @@
 package services
 
 import com.google.common.base.Function
-import domain.HoneycombLattice
 import domain.Lattice
-import domain.SquarePlanarLattice
-import domain.TriangularLattice
 import edu.uci.ics.jung.algorithms.layout.KKLayout
 import edu.uci.ics.jung.graph.Graph
 import edu.uci.ics.jung.visualization.VisualizationImageServer
@@ -17,13 +14,14 @@ import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.geom.Ellipse2D
+import java.awt.geom.Point2D
 import java.awt.image.BufferedImage
 import javax.swing.JFrame
 import javax.swing.JLabel
 
 class MarkovChains(
-        val lattice: Lattice
-) {
+        override val lattice: Lattice
+) : VirtualNode(lattice) {
 
     fun calculateCombinations() {
         print("CalculatingPairs...")
@@ -66,7 +64,6 @@ class MarkovChains(
                             0 -> "Binary Configuration: $key"
                             else -> "Pair $index: $pair"
                         }
-
                         isOpaque = true
                         background = Color.WHITE
                         setBounds(20, 10, 500, 50)
@@ -113,9 +110,9 @@ class MarkovChains(
                         }
                         add(jLabel)
                     }
-                    //showJFrame(this)
+                    // showJFrame(this)
                     //saveImage(key = key, pair = pair, idx = index)
-                    // images.add(getImage(Point2D.Double(graphLayout.size.width / 2.0, graphLayout.size.width / 2.0), Dimension(720, 720)) as BufferedImage)
+                    images.add(getImage(Point2D.Double(graphLayout.size.width / 2.0, graphLayout.size.width / 2.0), Dimension(720, 720)) as BufferedImage)
                     remove(jLabel)
                 }
             }
@@ -133,41 +130,4 @@ class MarkovChains(
         }
     }
 
-
-    fun <T> MutableList<T>.addVirtualSites(virtual: T): MutableList<T> {
-        return when (lattice) {
-            is SquarePlanarLattice -> addVirtualForSquarePlanar(virtual)
-            is HoneycombLattice -> addVirtualForHoneycomb(virtual)
-            is TriangularLattice -> addVirtualForTriangular(virtual)
-            else -> throw UnsupportedOperationException("something is worong")
-        }
-    }
-
-    fun <T> MutableList<T>.addVirtualForSquarePlanar(virtual: T): MutableList<T> {
-        when (this.size) {
-            2 -> this.addAll(listOf(virtual, virtual))
-            3 -> this.add(virtual)
-        }
-        return this
-    }
-
-    fun <T> MutableList<T>.addVirtualForTriangular(virtual: T): MutableList<T> = run {
-        when (this.size) {
-            3 -> this.addAll(listOf(virtual, virtual, virtual))
-            4 -> this.addAll(listOf(virtual, virtual))
-        }
-        this
-    }
-
-    fun <T> MutableList<T>.addVirtualForHoneycomb(virtual: T): MutableList<T> {
-        if (this.size == 2) this.add(virtual)
-        return this
-    }
-
-    fun <T> MutableCollection<T>.findAllPairs(): List<Pair<T, T>> = mutableListOf<Pair<T, T>>().let {
-        this.forEachIndexed { index, a ->
-            (index + 0 until this.size).mapTo(it) { it -> a to this.toList()[it] }
-        }
-        it
-    }
 }
