@@ -29,6 +29,8 @@ fun mean2(list: List<Int>): Double {
     return avg
 }
 
+fun <T, Y> Pair<T, Y>.flip() = second to first
+
 private fun <A, B> Pair<A, B>.isEmpty(): Boolean = this.first == -1 && this.second == -1
 
 
