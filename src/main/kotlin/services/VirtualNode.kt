@@ -40,7 +40,7 @@ abstract class VirtualNode(open val lattice: Lattice) {
         return this
     }
 
-    fun <T> MutableCollection<T>.findAllPairs(): List<Pair<T, T>> = mutableListOf<Pair<T, T>>().let {
+    fun <T> MutableCollection<T>.findAllPairs(): MutableList<Pair<T, T>> = mutableListOf<Pair<T, T>>().let {
         this.forEachIndexed { index, a ->
             (index + 0 until this.size).mapTo(it) { it -> a to this.toList()[it] }
         }

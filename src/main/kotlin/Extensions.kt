@@ -30,6 +30,21 @@ fun mean2(list: List<Int>): Double {
 }
 
 fun <T, Y> Pair<T, Y>.flip() = second to first
+fun Pair<Number, Number>.inOrder() = if (first.toInt() < second.toInt()) this else second to first
+
+fun <T, Y> Pair<T, Y>.isSame() = first == second
+
+inline fun <T> MutableList<T>.mapInPlace(mutator: (T) -> T): List<T> {
+    val iterate = this.listIterator()
+    while (iterate.hasNext()) {
+        val oldValue = iterate.next()
+        val newValue = mutator(oldValue)
+        if (newValue !== oldValue) {
+            iterate.set(newValue)
+        }
+    }
+    return iterate.asSequence().toList()
+}
 
 private fun <A, B> Pair<A, B>.isEmpty(): Boolean = this.first == -1 && this.second == -1
 
@@ -70,6 +85,93 @@ fun makeWordDocument(images: List<BufferedImage>) {
     out.flush()
     out.close()
 }
+
+fun Pair<Number, Number>.getIndexIn(mat: List<IntArray>): Pair<Pair<Int, Int>, Pair<Int, Int>> {
+    var coord: Pair<Int, Int> = -1 to -1
+    var coord2: Pair<Int, Int> = -1 to -1
+
+    mat.forEachIndexed { x, e ->
+        e.forEachIndexed { y, e2 ->
+            when (first == second) {
+                true -> when (first) {
+                    mat[x][y] -> {
+                        coord = x to y
+                        coord2 = x to y
+                    }
+                }
+                else -> when {
+                    (mat[x][y] == first) -> coord = x to y
+                    (mat[x][y] == second) -> coord2 = x to y
+                }
+            }
+        }
+    }
+    return coord to coord2
+}
+
+fun List<IntArray>.printMatrix() {
+    for (i in 0 until size) {
+        for (j in 0 until get(i).size) {
+            print("" + this[i][j] + if (this[i][j].toString().length == 1) "  " else " ")
+        }
+        println()
+    }
+}
+
+fun rotateMatrix(list: List<IntArray>, times: Int = 1): List<IntArray> {
+    val mat = list.map { it.map { it }.toIntArray() }
+    val N = list.size
+    (0 until times).forEach {
+        for (x in 0 until N / 2) {
+            // Consider elements in group of 4 in
+            // current square
+            for (y in x until N - x - 1) {
+                // store current cell in temp variable
+                val temp = mat[x][y]
+
+                // move values from right to top
+                mat[x][y] = mat[y][N - 1 - x]
+
+                // move values from bottom to right
+                mat[y][N - 1 - x] = mat[N - 1 - x][N - 1 - y]
+
+                // move values from left to bottom
+                mat[N - 1 - x][N - 1 - y] = mat[N - 1 - y][x]
+
+                // assign temp to left
+                mat[N - 1 - y][x] = temp
+            }
+        }
+    }
+    return mat.toList()
+}
+
+fun flipMatrixV(list: List<IntArray>): List<IntArray> {
+    val mat = list.map { it.map { it }.toIntArray() }
+    val N = list.size
+    for (i in 0 until N) {
+        for (j in 0 until N / 2) {
+            val temp = mat[i][j]
+            mat[i][j] = mat[i][N - 1 - j]
+            mat[i][N - 1 - j] = temp
+        }
+    }
+    return mat.toList()
+}
+
+fun flipMatrixH(list: List<IntArray>): List<IntArray> {
+    val mat = list.map { it.map { it }.toIntArray() }
+    val N = list.size
+    for (i in 0 until N / 2) {
+        for (j in 0 until mat[i].size) {
+            val temp = mat[i][j]
+            mat[i][j] = mat[N - 1 - i][j]
+            mat[N - 1 - i][j] = temp
+        }
+    }
+    return mat.toList()
+}
+
 
 fun VisualizationImageServer<Number, Number>.saveImage(key: Pair<Number, Number>, pair: Pair<Number, Number>, idx: Int) {
     val image = getImage(Point2D.Double(graphLayout.size.width / 2.0, graphLayout.size.width / 2.0), Dimension(720, 720)) as BufferedImage
