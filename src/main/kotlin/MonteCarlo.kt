@@ -1,8 +1,5 @@
 import UI.MyApp
-import domain.HoneycombLattice
-import domain.Lattice
-import domain.SquarePlanarLattice
-import domain.TriangularLattice
+import domain.*
 import edu.uci.ics.jung.graph.Graph
 import edu.uci.ics.jung.io.graphml.GraphMLReader2
 import javafx.application.Application
@@ -29,13 +26,16 @@ val graphs = loadGraphs(
         "HexagonGrid_169",
         "HexagonGrid_217",
         "Square_3",
-        "Square_5"
+        "Square_5",
+        "sierpinski_6",
+        "sierpinski_15",
+        "sierpinski_42",
+        "sierpinski_123"
 )
 
 fun main(args: Array<String>) {
     //showMemory()
     Application.launch(MyApp::class.java, *args)
-
 }
 
 fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
@@ -44,6 +44,7 @@ fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
         when {
             it.contains("flower") -> HoneycombLattice.valueOf(it.toUpperCase()) to loadGraphML("$basePath\\Flower\\$it.graphml")
             it.contains("Grid") -> TriangularLattice.valueOf(it) to loadGraphML("$basePath\\Dual\\$it.graphml")
+            it.contains("sierpinski") -> SierpinskiLattice.from(it) to loadGraphML("$basePath\\Fractal\\$it.graphml")
             else -> SquarePlanarLattice.valueOf(it) to loadGraphML("$basePath\\Square\\$it.graphml")
         }
     }.toMap()
