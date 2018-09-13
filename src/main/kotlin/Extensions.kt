@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.math.BigInteger
+import java.util.concurrent.ThreadLocalRandom
 import javax.imageio.ImageIO
 
 
@@ -33,6 +34,8 @@ fun <T, Y> Pair<T, Y>.flip() = second to first
 fun Pair<Number, Number>.inOrder() = if (first.toInt() < second.toInt()) this else second to first
 
 fun <T, Y> Pair<T, Y>.isSame() = first == second
+
+fun <E> List<E>.chooseRandom(): E? = if (size != 0) get(ThreadLocalRandom.current().nextInt(size)) else null
 
 inline fun <T> MutableList<T>.mapInPlace(mutator: (T) -> T): List<T> {
     val iterate = this.listIterator()

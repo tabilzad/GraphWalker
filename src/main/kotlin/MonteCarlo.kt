@@ -10,7 +10,7 @@ import java.io.InputStreamReader
 
 val threads_count = 8
 val probability = 0.0
-val Iterations = 128/*_000_000*/ / threads_count
+val Iterations = 160000/*_000_000*/ / threads_count
 val inputGraph = HoneycombLattice.FLOWER_24
 val graphs = loadGraphs(
         "flower_24",

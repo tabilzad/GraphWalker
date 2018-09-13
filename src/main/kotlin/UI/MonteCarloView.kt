@@ -37,6 +37,7 @@ class RightView : View() {
                 items.addAll(TriangularLattice.values())
                 items.addAll(HoneycombLattice.values())
                 items.addAll(SquarePlanarLattice.values())
+                items.addAll(SierpinskiLattice.values())
                 selectionModel.selectedItemProperty().addListener(
                         ChangeListener<Lattice> { observable, oldValue, newValue ->
                             s = newValue

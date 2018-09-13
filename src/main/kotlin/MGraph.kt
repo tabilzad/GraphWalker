@@ -1,4 +1,6 @@
 import domain.Lattice
+import domain.SierpinskiLattice
+import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath
 import edu.uci.ics.jung.graph.Graph
 import services.VirtualNode
 import java.util.concurrent.*
@@ -29,6 +31,22 @@ class MGraph(
             }
         }
     }
+
+    fun run_sierpinski() {
+        val lattice = graphInfo.second as SierpinskiLattice
+        (1..Iterations).forEach {
+            val to = listOf(lattice.centerPoint, lattice.trap).chooseRandom()!!
+            walker1 = 0//re-start
+            while ((walker1 != lattice.centerPoint) and (walker1 != lattice.trap)) {
+                walker1 = walkShortest(walker1, to)
+                steps++
+                println(steps)
+            }
+            list.add(steps)
+            steps = 0
+        }
+    }
+
 
     fun run_simTwoWalker() {
         graphInfo.second.let { lattice ->
@@ -63,6 +81,11 @@ class MGraph(
                 virtual[randomize(virtual.size)]
             }
         }
+    }
+
+    fun walkShortest(from: Number, to: Number): Number {
+        val edge = DijkstraShortestPath(graph).getPath(from, to).first()
+        return graph.getEndpoints(edge).first { it != from }
     }
 
 

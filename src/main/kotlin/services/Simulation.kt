@@ -23,7 +23,7 @@ class Simulation {
             (1..threads_count).forEach { i ->
                 threads.add(Thread(Runnable {
                     val g = MGraph(Iterations, probability, graphs[input]!! to input)
-                    g.run_simTwoWalker()
+                    g.run_sierpinski()
                     gList.addAll(g.list)
 
                 }))

@@ -1,9 +1,6 @@
 package services
 
-import domain.HoneycombLattice
-import domain.Lattice
-import domain.SquarePlanarLattice
-import domain.TriangularLattice
+import domain.*
 
 /**
  * Created by FERMAT on 4/20/2018.
@@ -15,6 +12,7 @@ abstract class VirtualNode(open val lattice: Lattice) {
             is SquarePlanarLattice -> addVirtualForSquarePlanar(virtual)
             is HoneycombLattice -> addVirtualForHoneycomb(virtual)
             is TriangularLattice -> addVirtualForTriangular(virtual)
+            is SierpinskiLattice -> this
             else -> throw UnsupportedOperationException("This Lattice is not currently supported")
         }
     }
