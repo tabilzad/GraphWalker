@@ -1,5 +1,6 @@
 import domain.Lattice
-import domain.SierpinskiLattice
+import domain.lattice.SierpinskiLattice
+import edu.uci.ics.jung.algorithms.shortestpath.DijkstraDistance
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath
 import edu.uci.ics.jung.graph.Graph
 import services.VirtualNode
@@ -33,17 +34,56 @@ class MGraph(
     }
 
     fun run_sierpinski() {
-        val lattice = graphInfo.second as SierpinskiLattice
+        val lattice = graphInfo.second
         (1..Iterations).forEach {
-            val to = listOf(lattice.centerPoint, lattice.trap).chooseRandom()!!
-            walker1 = 0//re-start
-            while ((walker1 != lattice.centerPoint) and (walker1 != lattice.trap)) {
-                walker1 = walkShortest(walker1, to)
-                steps++
-                println(steps)
+            do {
+                walker1 = graph.vertices.toList()[randomize(graph.vertexCount)]
+            } while (walker1 == lattice.centerPoint || walker1 == lattice.trap)
+
+            val to = DijkstraDistance(graph).let {
+                val d1 = it.getDistance(walker1, lattice.centerPoint).toInt()
+                val d2 = it.getDistance(walker1, lattice.trap).toInt()
+                if (d1 < d2) lattice.centerPoint else lattice.trap
             }
+
+            while ((walker1 != lattice.centerPoint) and (walker1 != lattice.trap)) {
+                // println("Walker at:$walker1")
+                walker1 = walkShortest(walker1, to)
+                // println("Walked to:$walker1")
+                steps++
+            }
+            //  println("-----Exited")
+            // println("-----Made steps: $steps")
             list.add(steps)
             steps = 0
+
+        }
+    }
+
+    fun run_sierpinski3D() {
+        val lattice = graphInfo.second
+        (1..Iterations).forEach {
+            do {
+                walker1 = graph.vertices.toList()[randomize(graph.vertexCount)]
+            } while (walker1 == lattice.centerPoint || walker1 == lattice.trap || walker1 == lattice.trap2)
+
+            val to = DijkstraDistance(graph).let {
+                val d1 = it.getDistance(walker1, lattice.centerPoint).toInt()
+                val d2 = it.getDistance(walker1, lattice.trap).toInt()
+                if (d1 < d2) lattice.centerPoint else lattice.trap
+            }
+
+            while ((walker1 != lattice.centerPoint) and (walker1 != lattice.trap) and (walker1 != lattice.trap2)) {
+                // println("Walker at:$walker1")
+                walker1 = walkShortest(walker1, to)
+                // println("Walked to:$walker1")
+                steps++
+            }
+            //  println("-----Exited")
+            // println("-----Made steps: $steps")
+            list.add(steps)
+            steps = 0
+
         }
     }
 
@@ -90,5 +130,5 @@ class MGraph(
 
 
     fun prob(probabilityTrue: Double): Boolean = ThreadLocalRandom.current().nextDouble() >= 1.0 - probabilityTrue
-    private fun randomize(grid_size: Int): Int = ThreadLocalRandom.current().nextInt(0, grid_size)
+    private fun randomize(grid_size: Int): Int = ThreadLocalRandom.current().nextInt(grid_size)
 }

@@ -1,6 +1,10 @@
 package services
 
 import domain.*
+import domain.lattice.HoneycombLattice
+import domain.lattice.SierpinskiLattice
+import domain.lattice.SquarePlanarLattice
+import domain.lattice.TriangularLattice
 
 /**
  * Created by FERMAT on 4/20/2018.

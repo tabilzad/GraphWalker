@@ -1,5 +1,6 @@
 import UI.MyApp
 import domain.*
+import domain.lattice.*
 import edu.uci.ics.jung.graph.Graph
 import edu.uci.ics.jung.io.graphml.GraphMLReader2
 import javafx.application.Application
@@ -9,8 +10,8 @@ import java.io.InputStreamReader
 
 
 val threads_count = 8
-val probability = 0.0
-val Iterations = 160000/*_000_000*/ / threads_count
+val probability = 1.0
+val Iterations = 12_000_000/*_000_000*/ / threads_count
 val inputGraph = HoneycombLattice.FLOWER_24
 val graphs = loadGraphs(
         "flower_24",
@@ -30,7 +31,11 @@ val graphs = loadGraphs(
         "sierpinski_6",
         "sierpinski_15",
         "sierpinski_42",
-        "sierpinski_123"
+        "sierpinski_123",
+        "tower_10",
+        "tower_34",
+        "tower_130",
+        "tower_514"
 )
 
 fun main(args: Array<String>) {
@@ -45,6 +50,7 @@ fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
             it.contains("flower") -> HoneycombLattice.valueOf(it.toUpperCase()) to loadGraphML("$basePath\\Flower\\$it.graphml")
             it.contains("Grid") -> TriangularLattice.valueOf(it) to loadGraphML("$basePath\\Dual\\$it.graphml")
             it.contains("sierpinski") -> SierpinskiLattice.from(it) to loadGraphML("$basePath\\Fractal\\$it.graphml")
+            it.contains("tower") -> TowerLattice.from(it) to loadGraphML("$basePath\\Fractal\\$it.graphml")
             else -> SquarePlanarLattice.valueOf(it) to loadGraphML("$basePath\\Square\\$it.graphml")
         }
     }.toMap()

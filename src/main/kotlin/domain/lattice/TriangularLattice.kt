@@ -1,9 +1,13 @@
-package domain
+package domain.lattice
+
+import domain.Lattice
 
 /**
-* Created by FERMAT on 3/26/2018.
-*/
-enum class TriangularLattice(override val centerPoint: Int) : Lattice {
+ * Created by FERMAT on 3/26/2018.
+ */
+enum class TriangularLattice(override val centerPoint: Int,
+                             override val trap: Int = 0,
+                             override val trap2: Int = 0) : Lattice {
     HexagonGrid_19(10),
     HexagonGrid_37(18),
     HexagonGrid_61(30),
