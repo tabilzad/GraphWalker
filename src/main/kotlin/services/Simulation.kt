@@ -40,14 +40,15 @@ class Simulation {
 
     private fun display(list: List<Int>, time: Long, lattice: Lattice) {
         val mean = list.average()
-        val error = list.standardDeviation() / Math.sqrt(list.size.toDouble())
+        val standardDeviation = list.standardDeviation()
+        val error = standardDeviation / Math.sqrt(list.size.toDouble())
         Result(
                 lattice = lattice.name,
                 samples = list.size.toString(),
                 walk_length = mean.toString(),
-                error = (error * 100).toString(),
-                range = (error * 1.96).toString(),
-                time = (time / 1000.0).toString()
+                error = (error * 100).toBigDecimal().toPlainString().take(5),
+                conf_interval = (error * 1.96).toBigDecimal().toPlainString().take(5),
+                time = "${(time / 1000.0)} seconds"
         ).let { result ->
             results.add(result)
             listOf(("Calculating averages..."),
@@ -55,7 +56,7 @@ class Simulation {
                     ("Samples: ${result.samples}"),
                     ("Walk Length: ${result.walk_length}"),
                     ("Error: ${result.error}%"),
-                    ("(+/-) ${result.range}"),
+                    ("(+/-) ${result.conf_interval}"),
                     ("Time: ${result.time} seconds"),
                     ("-------------------------------\n")).joinToString(System.lineSeparator())
                     .also { summary ->

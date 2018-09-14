@@ -43,7 +43,8 @@ class MGraph(
             val to = DijkstraDistance(graph).let {
                 val d1 = it.getDistance(walker1, lattice.centerPoint).toInt()
                 val d2 = it.getDistance(walker1, lattice.trap).toInt()
-                if (d1 < d2) lattice.centerPoint else lattice.trap
+                listOf(d1 to lattice.centerPoint,
+                        d2 to lattice.trap).minBy { it.first }!!.second
             }
 
             while ((walker1 != lattice.centerPoint) and (walker1 != lattice.trap)) {
@@ -70,7 +71,11 @@ class MGraph(
             val to = DijkstraDistance(graph).let {
                 val d1 = it.getDistance(walker1, lattice.centerPoint).toInt()
                 val d2 = it.getDistance(walker1, lattice.trap).toInt()
-                if (d1 < d2) lattice.centerPoint else lattice.trap
+                val d3 = it.getDistance(walker1, lattice.trap2).toInt()
+                // if (d1 < d2 ) lattice.centerPoint else lattice.trap
+                listOf(d1 to lattice.centerPoint,
+                        d2 to lattice.trap,
+                        d3 to lattice.trap2).minBy { it.first }!!.second
             }
 
             while ((walker1 != lattice.centerPoint) and (walker1 != lattice.trap) and (walker1 != lattice.trap2)) {

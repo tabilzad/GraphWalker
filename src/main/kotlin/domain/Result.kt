@@ -8,6 +8,6 @@ data class Result(
         val samples: String,
         val walk_length: String,
         val error: String,
-        val range: String,
+        val conf_interval: String,
         val time: String
 )

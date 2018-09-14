@@ -90,7 +90,7 @@ class LeftView : View() {
                 readonlyColumn("Lattice", Result::lattice)
                 readonlyColumn("Walk Length", Result::walk_length)
                 readonlyColumn("Error", Result::error)
-                readonlyColumn("Range", Result::range)
+                readonlyColumn("Range", Result::conf_interval)
                 readonlyColumn("Samples", Result::samples)
                 readonlyColumn("Time", Result::time)
                 columnResizePolicy = SmartResize.POLICY
