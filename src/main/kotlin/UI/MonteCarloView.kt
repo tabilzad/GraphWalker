@@ -93,6 +93,7 @@ class LeftView : View() {
                 readonlyColumn("Range", Result::conf_interval)
                 readonlyColumn("Samples", Result::samples)
                 readonlyColumn("Time", Result::time)
+                readonlyColumn("s", Result::mortality)
                 columnResizePolicy = SmartResize.POLICY
                 setPrefSize(650.0, 400.0)
             }

@@ -9,5 +9,6 @@ data class Result(
         val walk_length: String,
         val error: String,
         val conf_interval: String,
-        val time: String
+        val time: String,
+        val mortality: Double
 )

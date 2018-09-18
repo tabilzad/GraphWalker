@@ -1,17 +1,18 @@
 package services
 
+import MGraph
+import UI.results
 import domain.Lattice
+import domain.Result
 import graphs
 import org.nield.kotlinstatistics.standardDeviation
 import probability
 import threads_count
-import java.io.File
+import java.sql.DriverManager
 import java.time.LocalTime
 import java.util.*
 import kotlin.system.measureTimeMillis
-import MGraph
-import UI.results
-import domain.Result
+
 
 class Simulation {
 
@@ -23,7 +24,7 @@ class Simulation {
             (1..threads_count).forEach { i ->
                 threads.add(Thread(Runnable {
                     val g = MGraph(iters / threads_count, probability, graphs[input]!! to input)
-                    g.run_sierpinski3D()
+                    g.run_sierpinski()
                     gList.addAll(g.list)
 
                 }))
@@ -48,9 +49,11 @@ class Simulation {
                 walk_length = mean.toString(),
                 error = (error * 100).toBigDecimal().toPlainString().take(5),
                 conf_interval = (error * 1.96).toBigDecimal().toPlainString().take(5),
-                time = "${(time / 1000.0)} seconds"
+                time = "${(time / 1000.0)}",
+                mortality = probability
         ).let { result ->
             results.add(result)
+            result.writeToDB()
             listOf(("Calculating averages..."),
                     ("Lattice: ${result.lattice}"),
                     ("Samples: ${result.samples}"),
@@ -59,12 +62,26 @@ class Simulation {
                     ("(+/-) ${result.conf_interval}"),
                     ("Time: ${result.time} seconds"),
                     ("-------------------------------\n")).joinToString(System.lineSeparator())
-                    .also { summary ->
-                        print(summary)
-                        File("E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Log\\${UUID.randomUUID()}.txt").printWriter().use {
-                            it.write(summary)
-                        }
-                    }
+                    .also { summary -> print(summary) }
+        }
+    }
+
+    private fun Result.writeToDB() {
+        val url = "jdbc:sqlite:C:/sqlite/data.sql"
+        DriverManager.getConnection(url).use { db ->
+            db.prepareStatement("CREATE TABLE IF NOT EXISTS Data ( " +
+                    " ID integer PRIMARY KEY AUTOINCREMENT," +
+                    " lattice text NOT NULL," +
+                    " samples integer NOT NULL," +
+                    " walk_length real NOT NULL," +
+                    " error text real NULL," +
+                    " conf_interval real NOT NULL," +
+                    " time real NOT NULL," +
+                    " s real NOT NULL" +
+                    " );").execute()
+            db.prepareStatement("INSERT INTO Data(lattice, samples, walk_length, error, conf_interval, time, s)" +
+                    " VALUES (\"$lattice\", \"$samples\", \"$walk_length\", \"$error\"," +
+                    " \"$conf_interval\", \"$time\", \"$mortality\") ").executeUpdate()
         }
     }
 
