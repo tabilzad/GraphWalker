@@ -1,0 +1,391 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<graphml>
+ <key id='nodeKey1'
+     for='node'
+     attr.name='VertexCoordinates'
+     attr.type='String' />
+ <graph id='Graph1'
+     edgedefault='undirected'>
+  <node id='0'>
+   <data key='nodeKey1'>List[4.366059083975162`, 5.168647158122232`]</data>
+  </node>
+  <node id='1'>
+   <data key='nodeKey1'>List[4.898437567775254`, 4.390093709783077`]</data>
+  </node>
+  <node id='2'>
+   <data key='nodeKey1'>List[5.451606141809307`, 3.469721031408561`]</data>
+  </node>
+  <node id='3'>
+   <data key='nodeKey1'>List[5.892352662522635`, 2.627752833049696`]</data>
+  </node>
+  <node id='4'>
+   <data key='nodeKey1'>List[3.431286373408837`, 5.191918672984642`]</data>
+  </node>
+  <node id='5'>
+   <data key='nodeKey1'>List[3.99540364463478`, 4.4815766991881905`]</data>
+  </node>
+  <node id='6'>
+   <data key='nodeKey1'>List[4.580432699199545`, 3.573106052034168`]</data>
+  </node>
+  <node id='7'>
+   <data key='nodeKey1'>List[5.11209877021488`, 2.6218807826451784`]</data>
+  </node>
+  <node id='8'>
+   <data key='nodeKey1'>List[5.4656137071789885`, 1.7798478440269956`]</data>
+  </node>
+  <node id='9'>
+   <data key='nodeKey1'>List[2.3792976709146183`, 5.179337897874383`]</data>
+  </node>
+  <node id='10'>
+   <data key='nodeKey1'>List[2.918134972174366`, 4.490009281207123`]</data>
+  </node>
+  <node id='11'>
+   <data key='nodeKey1'>List[3.501954720143574`, 3.5922831260102273`]</data>
+  </node>
+  <node id='12'>
+   <data key='nodeKey1'>List[4.088439984560784`, 2.6113708706727605`]</data>
+  </node>
+  <node id='13'>
+   <data key='nodeKey1'>List[4.604075210392253`, 1.6606602551850653`]</data>
+  </node>
+  <node id='14'>
+   <data key='nodeKey1'>List[4.943646201852566`, 0.8556054965011131`]</data>
+  </node>
+  <node id='15'>
+   <data key='nodeKey1'>List[1.443612311757063`, 5.13399823088003`]</data>
+  </node>
+  <node id='16'>
+   <data key='nodeKey1'>List[1.8407132654418872`, 4.455178121198615`]</data>
+  </node>
+  <node id='17'>
+   <data key='nodeKey1'>List[2.362740865280531`, 3.572465902584371`]</data>
+  </node>
+  <node id='18'>
+   <data key='nodeKey1'>List[2.944878382326644`, 2.5946575271068`]</data>
+  </node>
+  <node id='19'>
+   <data key='nodeKey1'>List[3.526900812682318`, 1.614453422068305`]</data>
+  </node>
+  <node id='20'>
+   <data key='nodeKey1'>List[4.045030435321119`, 0.7356737231247574`]</data>
+  </node>
+  <node id='21'>
+   <data key='nodeKey1'>List[4.439556630891044`, 0.0563496553269176`]</data>
+  </node>
+  <node id='22'>
+   <data key='nodeKey1'>List[0.9485211773855986`, 4.335714457040753`]</data>
+  </node>
+  <node id='23'>
+   <data key='nodeKey1'>List[1.28945632066381`, 3.533112597231622`]</data>
+  </node>
+  <node id='24'>
+   <data key='nodeKey1'>List[1.8024975449476197`, 2.5846576156713748`]</data>
+  </node>
+  <node id='25'>
+   <data key='nodeKey1'>List[2.3801367562138154`, 1.5998757451720007`]</data>
+  </node>
+  <node id='26'>
+   <data key='nodeKey1'>List[2.961039817323997`, 0.6984839844841191`]</data>
+  </node>
+  <node id='27'>
+   <data key='nodeKey1'>List[3.500304037238074`, 0.010850359061194581`]</data>
+  </node>
+  <node id='28'>
+   <data key='nodeKey1'>List[0.42929429046813006`, 3.418353293001165`]</data>
+  </node>
+  <node id='29'>
+   <data key='nodeKey1'>List[0.7803527129081513`, 2.5804486496083`]</data>
+  </node>
+  <node id='30'>
+   <data key='nodeKey1'>List[1.3027412627335169`, 1.629477892468651`]</data>
+  </node>
+  <node id='31'>
+   <data key='nodeKey1'>List[1.8783184009389968`, 0.7138934925169058`]</data>
+  </node>
+  <node id='32'>
+   <data key='nodeKey1'>List[2.441289930976702`, 0.`]</data>
+  </node>
+  <node id='33'>
+   <data key='nodeKey1'>List[0.`, 2.5784347718937677`]</data>
+  </node>
+  <node id='34'>
+   <data key='nodeKey1'>List[0.4322473505349076`, 1.7397675601314906`]</data>
+  </node>
+  <node id='35'>
+   <data key='nodeKey1'>List[0.9723597812642777`, 0.8178322593390577`]</data>
+  </node>
+  <node id='36'>
+   <data key='nodeKey1'>List[1.500101594428504`, 0.03233838852444837`]</data>
+  </node>
+  <edge id='e1'
+      source='0'
+      target='1' />
+  <edge id='e2'
+      source='0'
+      target='4' />
+  <edge id='e3'
+      source='0'
+      target='5' />
+  <edge id='e4'
+      source='1'
+      target='2' />
+  <edge id='e5'
+      source='1'
+      target='5' />
+  <edge id='e6'
+      source='1'
+      target='6' />
+  <edge id='e7'
+      source='2'
+      target='3' />
+  <edge id='e8'
+      source='2'
+      target='6' />
+  <edge id='e9'
+      source='2'
+      target='7' />
+  <edge id='e10'
+      source='3'
+      target='7' />
+  <edge id='e11'
+      source='3'
+      target='8' />
+  <edge id='e12'
+      source='4'
+      target='5' />
+  <edge id='e13'
+      source='4'
+      target='9' />
+  <edge id='e14'
+      source='4'
+      target='10' />
+  <edge id='e15'
+      source='5'
+      target='6' />
+  <edge id='e16'
+      source='5'
+      target='10' />
+  <edge id='e17'
+      source='5'
+      target='11' />
+  <edge id='e18'
+      source='6'
+      target='7' />
+  <edge id='e19'
+      source='6'
+      target='11' />
+  <edge id='e20'
+      source='6'
+      target='12' />
+  <edge id='e21'
+      source='7'
+      target='8' />
+  <edge id='e22'
+      source='7'
+      target='12' />
+  <edge id='e23'
+      source='7'
+      target='13' />
+  <edge id='e24'
+      source='8'
+      target='13' />
+  <edge id='e25'
+      source='8'
+      target='14' />
+  <edge id='e26'
+      source='9'
+      target='10' />
+  <edge id='e27'
+      source='9'
+      target='15' />
+  <edge id='e28'
+      source='9'
+      target='16' />
+  <edge id='e29'
+      source='10'
+      target='11' />
+  <edge id='e30'
+      source='10'
+      target='16' />
+  <edge id='e31'
+      source='10'
+      target='17' />
+  <edge id='e32'
+      source='11'
+      target='12' />
+  <edge id='e33'
+      source='11'
+      target='17' />
+  <edge id='e34'
+      source='11'
+      target='18' />
+  <edge id='e35'
+      source='12'
+      target='13' />
+  <edge id='e36'
+      source='12'
+      target='18' />
+  <edge id='e37'
+      source='12'
+      target='19' />
+  <edge id='e38'
+      source='13'
+      target='14' />
+  <edge id='e39'
+      source='13'
+      target='19' />
+  <edge id='e40'
+      source='13'
+      target='20' />
+  <edge id='e41'
+      source='14'
+      target='20' />
+  <edge id='e42'
+      source='14'
+      target='21' />
+  <edge id='e43'
+      source='15'
+      target='16' />
+  <edge id='e44'
+      source='15'
+      target='22' />
+  <edge id='e45'
+      source='16'
+      target='17' />
+  <edge id='e46'
+      source='16'
+      target='22' />
+  <edge id='e47'
+      source='16'
+      target='23' />
+  <edge id='e48'
+      source='17'
+      target='18' />
+  <edge id='e49'
+      source='17'
+      target='23' />
+  <edge id='e50'
+      source='17'
+      target='24' />
+  <edge id='e51'
+      source='18'
+      target='19' />
+  <edge id='e52'
+      source='18'
+      target='24' />
+  <edge id='e53'
+      source='18'
+      target='25' />
+  <edge id='e54'
+      source='19'
+      target='20' />
+  <edge id='e55'
+      source='19'
+      target='25' />
+  <edge id='e56'
+      source='19'
+      target='26' />
+  <edge id='e57'
+      source='20'
+      target='21' />
+  <edge id='e58'
+      source='20'
+      target='26' />
+  <edge id='e59'
+      source='20'
+      target='27' />
+  <edge id='e60'
+      source='21'
+      target='27' />
+  <edge id='e61'
+      source='22'
+      target='23' />
+  <edge id='e62'
+      source='22'
+      target='28' />
+  <edge id='e63'
+      source='23'
+      target='24' />
+  <edge id='e64'
+      source='23'
+      target='28' />
+  <edge id='e65'
+      source='23'
+      target='29' />
+  <edge id='e66'
+      source='24'
+      target='25' />
+  <edge id='e67'
+      source='24'
+      target='29' />
+  <edge id='e68'
+      source='24'
+      target='30' />
+  <edge id='e69'
+      source='25'
+      target='26' />
+  <edge id='e70'
+      source='25'
+      target='30' />
+  <edge id='e71'
+      source='25'
+      target='31' />
+  <edge id='e72'
+      source='26'
+      target='27' />
+  <edge id='e73'
+      source='26'
+      target='31' />
+  <edge id='e74'
+      source='26'
+      target='32' />
+  <edge id='e75'
+      source='27'
+      target='32' />
+  <edge id='e76'
+      source='28'
+      target='29' />
+  <edge id='e77'
+      source='28'
+      target='33' />
+  <edge id='e78'
+      source='29'
+      target='30' />
+  <edge id='e79'
+      source='29'
+      target='33' />
+  <edge id='e80'
+      source='29'
+      target='34' />
+  <edge id='e81'
+      source='30'
+      target='31' />
+  <edge id='e82'
+      source='30'
+      target='34' />
+  <edge id='e83'
+      source='30'
+      target='35' />
+  <edge id='e84'
+      source='31'
+      target='32' />
+  <edge id='e85'
+      source='31'
+      target='35' />
+  <edge id='e86'
+      source='31'
+      target='36' />
+  <edge id='e87'
+      source='32'
+      target='36' />
+  <edge id='e88'
+      source='33'
+      target='34' />
+  <edge id='e89'
+      source='34'
+      target='35' />
+  <edge id='e90'
+      source='35'
+      target='36' />
+ </graph>
+</graphml>

@@ -10,7 +10,7 @@ import java.io.InputStreamReader
 
 
 val threads_count = 8
-val probability = 1.0
+val probability = 0.99
 val Iterations = 12_000_000/*_000_000*/ / threads_count
 val inputGraph = HoneycombLattice.FLOWER_24
 val graphs = loadGraphs(
@@ -45,7 +45,7 @@ fun main(args: Array<String>) {
 
 fun loadGraphs(vararg names: String): Map<Lattice, Graph<Number, Number>> {
     return names.map<String, Pair<Lattice, Graph<Number, Number>>> {
-        val basePath = "E:\\Format\\Desktop\\Classes\\Research_walkers_MathNB\\Current\\Shapes"
+        val basePath = ClassLoader.getSystemResource("Shapes").path
         when {
             it.contains("flower") -> HoneycombLattice.valueOf(it.toUpperCase()) to loadGraphML("$basePath\\Flower\\$it.graphml")
             it.contains("Grid") -> TriangularLattice.valueOf(it) to loadGraphML("$basePath\\Dual\\$it.graphml")

@@ -9,7 +9,10 @@ import org.nield.kotlinstatistics.standardDeviation
 import probability
 import threads_count
 import java.sql.DriverManager
+import java.time.LocalDate
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 import kotlin.system.measureTimeMillis
 
@@ -24,7 +27,7 @@ class Simulation {
             (1..threads_count).forEach { i ->
                 threads.add(Thread(Runnable {
                     val g = MGraph(iters / threads_count, probability, graphs[input]!! to input)
-                    g.run_sierpinski()
+                    g.run_sierpinski3D()
                     gList.addAll(g.list)
 
                 }))
@@ -77,11 +80,12 @@ class Simulation {
                     " error text real NULL," +
                     " conf_interval real NOT NULL," +
                     " time real NOT NULL," +
-                    " s real NOT NULL" +
+                    " s real NOT NULL," +
+                    " timestamp text" +
                     " );").execute()
-            db.prepareStatement("INSERT INTO Data(lattice, samples, walk_length, error, conf_interval, time, s)" +
+            db.prepareStatement("INSERT INTO Data(lattice, samples, walk_length, error, conf_interval, time, s, timestamp)" +
                     " VALUES (\"$lattice\", \"$samples\", \"$walk_length\", \"$error\"," +
-                    " \"$conf_interval\", \"$time\", \"$mortality\") ").executeUpdate()
+                    " \"$conf_interval\", \"$time\", \"$mortality\", \"${LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)}\")").executeUpdate()
         }
     }
 

@@ -33,6 +33,7 @@ dependencies {
     compile group: 'net.sf.jung', name: 'jung-visualization', version: '2.1.1'
 
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.23.1'
+    //compile group: 'org.mongodb', name: 'mongo-java-driver', version: '3.8.1'
 
     testCompile 'org.assertj:assertj-core:3.9.0'
     testCompile "junit:junit:4.11"
