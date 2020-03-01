@@ -1,3 +1,3 @@
 # GraphWalker
 
-![](ui.png)
+![](ui.PNG)
