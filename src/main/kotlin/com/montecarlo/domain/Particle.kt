@@ -1,4 +1,4 @@
-package domain
+package com.montecarlo.domain
 
 import java.util.concurrent.ThreadLocalRandom
 

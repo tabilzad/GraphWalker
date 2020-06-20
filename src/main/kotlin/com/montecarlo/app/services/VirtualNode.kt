@@ -1,10 +1,11 @@
-package services
+package com.montecarlo.app.services
 
-import domain.*
-import domain.lattice.HoneycombLattice
-import domain.lattice.SierpinskiLattice
-import domain.lattice.SquarePlanarLattice
-import domain.lattice.TriangularLattice
+import com.montecarlo.lattice.HoneycombLattice
+import com.montecarlo.lattice.Lattice
+import com.montecarlo.lattice.SquarePlanarLattice
+import TriangularLattice
+import SierpinskiLattice
+import TowerLattice
 
 /**
  * Created by FERMAT on 4/20/2018.
@@ -17,6 +18,7 @@ abstract class VirtualNode(open val lattice: Lattice) {
             is HoneycombLattice -> addVirtualForHoneycomb(virtual)
             is TriangularLattice -> addVirtualForTriangular(virtual)
             is SierpinskiLattice -> this
+            is TowerLattice -> this
             else -> throw UnsupportedOperationException("This Lattice is not currently supported")
         }
     }

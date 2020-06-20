@@ -1,4 +1,4 @@
-package domain
+package com.montecarlo.domain
 
 import edu.uci.ics.jung.algorithms.layout.Layout
 import edu.uci.ics.jung.visualization.layout.PersistentLayout

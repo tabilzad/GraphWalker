@@ -1,4 +1,4 @@
-package domain
+package com.montecarlo.domain
 
 /**
  * Created by FERMAT on 4/4/2018.
