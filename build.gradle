@@ -15,7 +15,7 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 apply plugin: 'kotlin'
-apply plugin: "com.jfrog.artifactory"
+
 javafx {
     version = "11.0.2"
     modules = ['javafx.controls']
