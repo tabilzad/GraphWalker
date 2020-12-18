@@ -121,7 +121,7 @@ class MGraphWalled(
                 task?.updateProgress(index.toLong(), Iterations.toLong())
                 //val walls = listOf<Number>()
                 val walls = lattice.points
-                val trap = 15
+                val trap = lattice.trap
 
                 walker1 = graph.vertices.toList()[randomize(graph.vertexCount)]
                 walker2 = graph.vertices.toList()[randomize(graph.vertexCount)]
